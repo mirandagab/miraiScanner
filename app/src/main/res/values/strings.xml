@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MiraiScanner</string>
+    <string name="textoInformativo">Este aplicativo detecta dispositivos IoT em sua rede Wi-Fi atual que estejam sujeitos a ataques do malware Mirai</string>
+    <string name="textoClick">Por favor se conecte a rede Wi-Fi e clique no botão abaixo</string>
+</resources>
