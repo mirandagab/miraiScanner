@@ -1,5 +1,6 @@
 package miraiscanner.facom.ufu.br.miraiscanner;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,14 +15,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //criação da variável de botão para escaneamento
         botaoScan = (Button) findViewById(R.id.botaoScanID);
 
+        //muda para a activity de escaneamento da rede Wi-Fi ao clicar no botão SCAN
         botaoScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TO DO
-                // colocar o método para escanear a rede Wi-Fi
-                // chamar próxima tela com informações e ações disponíveis
+                startActivity(new Intent(MainActivity.this, ScannerActivity.class));
             }
         });
     }
