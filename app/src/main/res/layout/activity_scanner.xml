@@ -14,11 +14,21 @@
     <Button
         android:text="SCAN"
         android:layout_height="wrap_content"
-        android:id="@+id/botaoScanID"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="86dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/stringIPsID"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

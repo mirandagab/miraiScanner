@@ -7,8 +7,10 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.provider.SyncStateContract;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
@@ -17,26 +19,35 @@ import java.net.InetAddress;
  * Created by mirandagab on 08/02/2018.
  */
 
-class ScannerWiFi extends AsyncTask<Void, Void, Void>{
+class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private Context contexto;
 
     private WeakReference<Context> mContextRef;
 
+    private static final String TAG = "ntask";
 
-    public ScannerWiFi(Context contexto){
+    private String ips = "";
+
+    private EditText listaIPs;
+
+    private ProgressDialog carregamento;
+
+
+    public ScannerWiFi(Context contexto, EditText listaIPs){
         this.contexto = contexto;
-        mContextRef = new WeakReference<Context>(contexto);
+        this.mContextRef = new WeakReference<Context>(contexto);
+        this.listaIPs = listaIPs;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        ProgressDialog carregamento = ProgressDialog.show(contexto, "Por favor aguarde", "Escaneando a rede WiFi");
+        carregamento = ProgressDialog.show(contexto, "Por favor aguarde", "Escaneando a rede WiFi");
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String doInBackground(Void... params) {
 
         try {
             Context context = mContextRef.get();
@@ -52,14 +63,15 @@ class ScannerWiFi extends AsyncTask<Void, Void, Void>{
                 int ipAddress = connectionInfo.getIpAddress();
                 String ipString = Formatter.formatIpAddress(ipAddress);
 
-                //Log.d(TAG, "activeNetwork: " + String.valueOf(activeNetwork));
-                //Log.d(TAG, "ipString: " + String.valueOf(ipString));
-                System.out.println("activeNetwork: " + String.valueOf(activeNetwork));
-                System.out.println("ipString: " + String.valueOf(ipString));
+                Log.d(TAG, "activeNetwork: " + String.valueOf(activeNetwork));
+                Log.d(TAG, "ipString: " + String.valueOf(ipString));
+                ips += "activeNetwork: " + String.valueOf(activeNetwork) + "\nipString: " + String.valueOf(ipString) + "\n";
+                //System.out.println("activeNetwork: " + String.valueOf(activeNetwork));
+                //System.out.println("ipString: " + String.valueOf(ipString));
 
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
-                //Log.d(TAG, "prefix: " + prefix);
-                System.out.println("prefix: " + prefix);
+                Log.d(TAG, "prefix: " + prefix);
+                //System.out.println("prefix: " + prefix);
 
                 for (int i = 0; i < 255; i++) {
                     String testIp = prefix + String.valueOf(i);
@@ -68,32 +80,35 @@ class ScannerWiFi extends AsyncTask<Void, Void, Void>{
                     boolean reachable = address.isReachable(1000);
                     String hostName = address.getCanonicalHostName();
 
-                    if (reachable)
-                        //Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
-                        System.out.println("Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
+                    if (reachable) {
+                        Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
+                        ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
+                        //System.out.println("Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
+                    }
                 }
             }
         } catch (Throwable t) {
-            //Log.e(TAG, "Well that's not good.", t);
-            System.out.println("Well that's not good.");
+            Log.e(TAG, "Well that's not good.", t);
+            //System.out.println("Well that's not good.");
         }
 
 
-        return null;
+        return ips;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String textoExibicao) {
+        super.onPostExecute(textoExibicao);
 
-        super.onPostExecute(aVoid);
+        if(textoExibicao != "" && textoExibicao != null) {
+            listaIPs.setText(ips);
+            Log.i(TAG, "Setando resultados na tela via Async.");
+        }
+        else {
+            Log.i(TAG, "Erro ao setar o texto na tela via Async.");
+        }
+        //Tirando o ProgressDialog da tela
+        carregamento.dismiss();
     }
-
-
-
-    //TODO
-        /*
-         COLOCAR AQUI O MÉTODO scan() QUE BUSCA OS IPs
-         E NOMES DOS DISPOSITIVOS CONECTADOS NA REDE WIFI
-        */
 
 }
