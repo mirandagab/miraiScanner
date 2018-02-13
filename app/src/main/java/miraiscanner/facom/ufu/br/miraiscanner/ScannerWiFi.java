@@ -1,5 +1,6 @@
 package miraiscanner.facom.ufu.br.miraiscanner;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -10,10 +11,14 @@ import android.os.AsyncTask;
 import android.provider.SyncStateContract;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mirandagab on 08/02/2018.
@@ -31,13 +36,20 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private EditText listaIPs;
 
+    private ListView listaDeIpsConectados;
+
+    private List<String> listaIpsString;
+
     private ProgressDialog carregamento;
 
+    private Activity atv;
 
-    public ScannerWiFi(Context contexto, EditText listaIPs){
+    public ScannerWiFi(Context contexto, EditText listaIPs, ListView listaDeIpsConectados, Activity atv){
         this.contexto = contexto;
         this.mContextRef = new WeakReference<Context>(contexto);
         this.listaIPs = listaIPs;
+        this.listaDeIpsConectados = listaDeIpsConectados;
+        this.atv = atv;
     }
 
     @Override
@@ -50,13 +62,15 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
     protected String doInBackground(Void... params) {
 
         try {
+            listaIpsString = new ArrayList<>();
+
             Context context = mContextRef.get();
 
             if (context != null) {
 
                 ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                WifiManager wm = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+                WifiManager wm = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
 
                 WifiInfo connectionInfo = wm.getConnectionInfo();
@@ -77,10 +91,11 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     String testIp = prefix + String.valueOf(i);
 
                     InetAddress address = InetAddress.getByName(testIp);
-                    boolean reachable = address.isReachable(1000);
+                    boolean reachable = address.isReachable(100);
                     String hostName = address.getCanonicalHostName();
 
                     if (reachable) {
+                        listaIpsString.add(String.valueOf(testIp));
                         Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
                         ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
                         //System.out.println("Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
@@ -92,7 +107,6 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
             //System.out.println("Well that's not good.");
         }
 
-
         return ips;
     }
 
@@ -102,6 +116,11 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
         if(textoExibicao != "" && textoExibicao != null) {
             listaIPs.setText(ips);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.atv,
+                    android.R.layout.simple_list_item_1, listaIpsString);
+
+            listaDeIpsConectados.setAdapter(adapter);
             Log.i(TAG, "Setando resultados na tela via Async.");
         }
         else {

@@ -31,4 +31,11 @@
         android:id="@+id/stringIPsID"
         android:layout_alignParentEnd="true" />
 
+    <ListView
+        android:id="@+id/listaDeIpsConectados"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stringIPsID"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
