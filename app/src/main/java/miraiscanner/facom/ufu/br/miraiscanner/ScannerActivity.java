@@ -22,7 +22,7 @@ public class ScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
         listaIPs = (EditText)findViewById(R.id.stringIPsID);
-        listaDeIpsConectados = (ListView) findViewById(R.id.listaDeIpsConectados);
+        listaDeIpsConectados = (ListView) findViewById(R.id.listaDeIPsConectadosID);
 
         fazerEscaneamentoAsync();
     }

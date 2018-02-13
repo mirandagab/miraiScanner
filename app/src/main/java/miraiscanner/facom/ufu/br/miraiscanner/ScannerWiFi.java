@@ -15,8 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,18 +90,46 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 //System.out.println("prefix: " + prefix);
 
                 for (int i = 0; i < 255; i++) {
-                    String testIp = prefix + String.valueOf(i);
+                    final String prefixo = prefix;
+                    final int j = i;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String testIp = prefixo + String.valueOf(j);
 
-                    InetAddress address = InetAddress.getByName(testIp);
-                    boolean reachable = address.isReachable(1000);
-                    String hostName = address.getCanonicalHostName();
+                            InetAddress address = null;
+                            try {
+                                address = InetAddress.getByName(testIp);
+                            } catch (UnknownHostException e) {
+                                e.printStackTrace();
+                            }
+                            boolean reachable = false;
+                            try {
+                                reachable = address.isReachable(5000);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            String hostName = address.getCanonicalHostName();
 
-                    if (reachable) {
-                        listaIpsString.add(String.valueOf(testIp));
-                        Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
-                        ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
-                        //System.out.println("Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
-                    }
+                            if (reachable) {
+                                listaIpsString.add(String.valueOf(testIp));
+                                Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
+                                ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
+                            }
+                        }
+                    }).start();
+//                    String testIp = prefix + String.valueOf(i);
+//
+//                    InetAddress address = InetAddress.getByName(testIp);
+//                    boolean reachable = address.isReachable(1000);
+//                    String hostName = address.getCanonicalHostName();
+//
+//                    if (reachable) {
+//                        listaIpsString.add(String.valueOf(testIp));
+//                        Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
+//                        ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
+//                        //System.out.println("Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
+//                    }
                 }
             }
         } catch (Throwable t) {

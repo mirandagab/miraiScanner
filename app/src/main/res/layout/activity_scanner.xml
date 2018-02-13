@@ -11,16 +11,6 @@
     tools:context="miraiscanner.facom.ufu.br.miraiscanner.ScannerActivity"
     android:background="@android:color/holo_blue_dark">
 
-    <Button
-        android:text="SCAN"
-        android:layout_height="wrap_content"
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="86dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +22,7 @@
         android:layout_alignParentEnd="true" />
 
     <ListView
-        android:id="@+id/listaDeIpsConectados"
+        android:id="@+id/listaDeIPsConectadosID"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/stringIPsID"
