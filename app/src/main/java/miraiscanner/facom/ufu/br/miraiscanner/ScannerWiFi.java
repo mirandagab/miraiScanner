@@ -91,7 +91,7 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     String testIp = prefix + String.valueOf(i);
 
                     InetAddress address = InetAddress.getByName(testIp);
-                    boolean reachable = address.isReachable(100);
+                    boolean reachable = address.isReachable(1000);
                     String hostName = address.getCanonicalHostName();
 
                     if (reachable) {
