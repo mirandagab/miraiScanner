@@ -32,7 +32,7 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private WeakReference<Context> mContextRef;
 
-    private static final String TAG = "ntask";
+    private static final String TAG = "ScannerWiFi";
 
     private String ips = "";
 
@@ -81,13 +81,10 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                 Log.d(TAG, "activeNetwork: " + String.valueOf(activeNetwork));
                 Log.d(TAG, "ipString: " + String.valueOf(ipString));
-                ips += "activeNetwork: " + String.valueOf(activeNetwork) + "\nipString: " + String.valueOf(ipString) + "\n";
-                //System.out.println("activeNetwork: " + String.valueOf(activeNetwork));
-                //System.out.println("ipString: " + String.valueOf(ipString));
+                ips += "activeNetwork: " + String.valueOf(activeNetwork) + "ipString: " + String.valueOf(ipString);
 
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
                 Log.d(TAG, "prefix: " + prefix);
-                //System.out.println("prefix: " + prefix);
 
                 for (int i = 0; i < 255; i++) {
                     final String prefixo = prefix;
@@ -100,46 +97,34 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                             InetAddress address = null;
                             try {
                                 address = InetAddress.getByName(testIp);
-                            } catch (UnknownHostException e) {
-                                e.printStackTrace();
-                            }
-                            boolean reachable = false;
-                            try {
-                                reachable = address.isReachable(5000);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            String hostName = address.getCanonicalHostName();
 
-                            if (reachable) {
-                                listaIpsString.add(String.valueOf(testIp));
-                                Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
-                                ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
+                                boolean reachable = false;
+                                reachable = address.isReachable(1000);
+
+                                String hostName = address.getCanonicalHostName();
+
+                                if (reachable) {
+                                    listaIpsString.add(String.valueOf(testIp));
+                                    Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!");
+                                    ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!";
+                                }
+                            } catch (Exception e) {
+                                Log.e(TAG, "Algo deu errado.", e);
                             }
                         }
                     }).start();
-//                    String testIp = prefix + String.valueOf(i);
-//
-//                    InetAddress address = InetAddress.getByName(testIp);
-//                    boolean reachable = address.isReachable(1000);
-//                    String hostName = address.getCanonicalHostName();
-//
-//                    if (reachable) {
-//                        listaIpsString.add(String.valueOf(testIp));
-//                        Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
-//                        ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!\n";
-//                        //System.out.println("Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") is reachable!");
-//                    }
                 }
             }
         } catch (Throwable t) {
-            Log.e(TAG, "Well that's not good.", t);
-            //System.out.println("Well that's not good.");
+            Log.e(TAG, "Algo deu errado.", t);
         }
 
         return ips;
     }
 
+    //Retorna resultados para a thread de exibição ao usuário
+    //e seta os valores dos IPs encontrados em um ListView, com
+    //um IP por linha. Também fecha o ProgressDialog
     @Override
     protected void onPostExecute(String textoExibicao) {
         super.onPostExecute(textoExibicao);
@@ -154,7 +139,7 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
             Log.i(TAG, "Setando resultados na tela via Async.");
         }
         else {
-            Log.i(TAG, "Erro ao setar o texto na tela via Async.");
+            Log.e(TAG, "Erro ao setar o texto na tela via Async.");
         }
         //Tirando o ProgressDialog da tela
         carregamento.dismiss();
