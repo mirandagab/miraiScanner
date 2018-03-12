@@ -56,7 +56,24 @@ public class AdapterDispositivo extends BaseAdapter {
         //populando as Views
         nome.setText(dispositivo.getNome());
         ip.setText(dispositivo.getIp());
-        imagem.setImageResource(R.mipmap.icone_app);
+
+        switch(dispositivo.getTipo()){
+            case "Celular":
+                imagem.setImageResource(R.drawable.disp_celular);
+                break;
+            case "Computador":
+                imagem.setImageResource(R.drawable.disp_computador);
+                break;
+            case "Roteador":
+                imagem.setImageResource(R.drawable.disp_roteador);
+                break;
+            case "IoT":
+                imagem.setImageResource(R.drawable.disp_camera);
+                break;
+            default:
+                imagem.setImageResource(R.drawable.disp_generico);
+                break;
+        }
 
         return view;
     }

@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/lista_dispositivo_imagem"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/activity_margin" />
+    android:orientation="horizontal"
+    android:weightSum="12"
+    android:paddingTop="10dp"
+    android:paddingLeft="@dimen/activity_margin">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/lista_dispositivo_imagem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="11">
 
         <TextView
             android:id="@+id/lista_dispositivo_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Titulo"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/lista_dispositivo_descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="descriçao"
-            android:textSize="16dp" />
+            android:textSize="12dp" />
 
     </LinearLayout>
 

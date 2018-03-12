@@ -3,6 +3,7 @@ package miraiscanner.facom.ufu.br.miraiscanner.Activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Address;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -108,7 +109,6 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                 if(address != null) {
                                     boolean reachable = false;
                                     reachable = address.isReachable(1000);
-
                                     String hostName = address.getCanonicalHostName();
 
                                     if (reachable) {
