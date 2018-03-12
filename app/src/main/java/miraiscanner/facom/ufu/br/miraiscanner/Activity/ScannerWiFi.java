@@ -1,4 +1,4 @@
-package miraiscanner.facom.ufu.br.miraiscanner;
+package miraiscanner.facom.ufu.br.miraiscanner.Activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,6 +12,7 @@ import android.provider.SyncStateContract;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -21,6 +22,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
+import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
+import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
 
 /**
  * Created by mirandagab on 08/02/2018.
@@ -36,21 +40,23 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private String ips = "";
 
-    private EditText listaIPs;
+    private ArrayAdapter<String> adapter;
 
-    private ListView listaDeIpsConectados;
+    private AdapterDispositivo adapterTeste;
 
     private List<String> listaIpsString;
+
+    private List<Dispositivo> listaDispositivos;
 
     private ProgressDialog carregamento;
 
     private Activity atv;
 
-    public ScannerWiFi(Context contexto, EditText listaIPs, ListView listaDeIpsConectados, Activity atv){
+    public ScannerWiFi(Context contexto, ArrayAdapter adapter, AdapterDispositivo adapterTeste, Activity atv){
         this.contexto = contexto;
         this.mContextRef = new WeakReference<Context>(contexto);
-        this.listaIPs = listaIPs;
-        this.listaDeIpsConectados = listaDeIpsConectados;
+        this.adapter = adapter;
+        this.adapterTeste = adapterTeste;
         this.atv = atv;
     }
 
@@ -65,6 +71,7 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
         try {
             listaIpsString = new ArrayList<>();
+            listaDispositivos = new ArrayList<>();
 
             Context context = mContextRef.get();
 
@@ -98,15 +105,18 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                             try {
                                 address = InetAddress.getByName(testIp);
 
-                                boolean reachable = false;
-                                reachable = address.isReachable(1000);
+                                if(address != null) {
+                                    boolean reachable = false;
+                                    reachable = address.isReachable(1000);
 
-                                String hostName = address.getCanonicalHostName();
+                                    String hostName = address.getCanonicalHostName();
 
-                                if (reachable) {
-                                    listaIpsString.add(String.valueOf(testIp));
-                                    Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!");
-                                    ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!";
+                                    if (reachable) {
+                                        listaIpsString.add(String.valueOf(testIp));
+                                        listaDispositivos.add(new Dispositivo(testIp));
+                                        Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!");
+                                        ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!";
+                                    }
                                 }
                             } catch (Exception e) {
                                 Log.e(TAG, "Algo deu errado.", e);
@@ -130,12 +140,12 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
         super.onPostExecute(textoExibicao);
 
         if(textoExibicao != "" && textoExibicao != null) {
-            listaIPs.setText(ips);
+            adapter.clear();
+            adapter.addAll(listaIpsString);
+            //adapter.notifyDataSetChanged();
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.atv,
-                    android.R.layout.simple_list_item_1, listaIpsString);
+            adapterTeste.setDispositivos(listaDispositivos);
 
-            listaDeIpsConectados.setAdapter(adapter);
             Log.i(TAG, "Setando resultados na tela via Async.");
         }
         else {
@@ -144,5 +154,6 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
         //Tirando o ProgressDialog da tela
         carregamento.dismiss();
     }
+
 
 }

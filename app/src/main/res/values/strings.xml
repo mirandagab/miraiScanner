@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">MiraiScanner</string>
-    <string name="textoInformativo">Este aplicativo detecta dispositivos IoT em sua rede Wi-Fi atual que estejam sujeitos a ataques do malware Mirai</string>
+    <string name="app_name">Mirai Scanner</string>
+    <string name="textoInformativo">O Mirai Scanner é um aplicativo desenvolvido para detectar dispositivos IoT em sua rede Wi-Fi atual que estejam sujeitos a ataques do malware Mirai.</string>
     <string name="textoClick">Por favor se conecte a rede Wi-Fi e clique no botão abaixo</string>
+    <string name="item_sobre">Sobre</string>
+    <string name="item_configuracoes">Configurações</string>
+    <string name="item_sair">Sair</string>
+    <string name="item_atualizar">Atualizar</string>
+    <string name="app_versao">Versão 1.0.0</string>
+    <string name="app_ultima_atualizacao">Última atualização: 10/03/2018</string>
+    <string name="dispositivos_encontrados">Dispositivos encontrados</string>
 </resources>
