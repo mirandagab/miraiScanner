@@ -3,26 +3,20 @@ package miraiscanner.facom.ufu.br.miraiscanner.Activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.location.Address;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.provider.SyncStateContract;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
@@ -82,7 +76,6 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
                 WifiManager wm = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-
                 WifiInfo connectionInfo = wm.getConnectionInfo();
                 int ipAddress = connectionInfo.getIpAddress();
                 String ipString = Formatter.formatIpAddress(ipAddress);
@@ -94,10 +87,12 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
                 Log.d(TAG, "prefix: " + prefix);
 
+                ExecutorService executor = Executors.newFixedThreadPool(100);
+
                 for (int i = 0; i < 255; i++) {
                     final String prefixo = prefix;
                     final int j = i;
-                    new Thread(new Runnable() {
+                    executor.execute(new Runnable() {
                         @Override
                         public void run() {
                             String testIp = prefixo + String.valueOf(j);
@@ -122,8 +117,14 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                 Log.e(TAG, "Algo deu errado.", e);
                             }
                         }
-                    }).start();
+                    });
                 }
+
+                executor.shutdown();
+                while (!executor.isTerminated()) {
+                    //Colocar uma barra de progresso
+                }
+                System.out.println("Escaneamento da rede WiFi concluído!");
             }
         } catch (Throwable t) {
             Log.e(TAG, "Algo deu errado.", t);
@@ -154,6 +155,4 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
         //Tirando o ProgressDialog da tela
         carregamento.dismiss();
     }
-
-
 }
