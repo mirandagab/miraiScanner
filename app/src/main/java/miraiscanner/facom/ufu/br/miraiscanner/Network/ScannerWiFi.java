@@ -1,4 +1,4 @@
-package miraiscanner.facom.ufu.br.miraiscanner.Activity;
+package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -13,19 +13,23 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
+import miraiscanner.facom.ufu.br.miraiscanner.Network.MacAddress;
 
 /**
  * Created by mirandagab on 08/02/2018.
  */
 
-class ScannerWiFi extends AsyncTask<Void, Void, String>{
+public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private Context contexto;
 
@@ -96,7 +100,6 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                         @Override
                         public void run() {
                             String testIp = prefixo + String.valueOf(j);
-
                             InetAddress address = null;
                             try {
                                 address = InetAddress.getByName(testIp);
@@ -105,12 +108,44 @@ class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                     boolean reachable = false;
                                     reachable = address.isReachable(1000);
                                     String hostName = address.getCanonicalHostName();
+                                    NetworkInterface niMac = NetworkInterface.getByInetAddress(address);
 
                                     if (reachable) {
-                                        listaIpsString.add(String.valueOf(testIp));
-                                        listaDispositivos.add(new Dispositivo(testIp));
-                                        Log.i(TAG, "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!");
-                                        ips += "Host: " + String.valueOf(hostName) + "(" + String.valueOf(testIp) + ") está acessível!";
+                                        final String ip = testIp;
+                                        String endereco = "";
+                                        if(niMac != null) {
+                                            byte[] endMac = niMac.getHardwareAddress();
+                                            String mac;
+                                            if (endMac != null) {
+                                                for (int i = 0; i < endMac.length; i++)
+                                                    endereco += (String.format("%02X:", endMac[i]));
+                                                endereco = endereco.substring(0, endereco.length() - 1);
+                                            }
+                                        }
+                                        else
+                                            endereco = MacAddress.getByIpLinux(testIp);
+
+                                        final String mac = endereco;
+                                        final String hname = hostName;
+
+
+                                        //Corrigir essa parte do código
+                                        try {
+                                            TimeLimitedCodeBlock.runWithTimeout(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    //As vezes retorna o resultado, as vezes não... Obrigar a esperar o retorno ou dar um certo timeout
+                                                    String fabricante = MacVendorLookup.get(mac);
+                                                    listaIpsString.add(String.valueOf(ip));
+                                                    listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
+                                                    Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
+                                                    ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
+                                                }
+                                            }, 5, TimeUnit.SECONDS);
+                                        }
+                                        catch (TimeoutException e) {
+                                            System.out.println("Erro na chamada do fabricante");
+                                        }
                                     }
                                 }
                             } catch (Exception e) {

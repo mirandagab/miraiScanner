@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.R;
-import miraiscanner.facom.ufu.br.miraiscanner.Activity.ScannerWiFi;
+import miraiscanner.facom.ufu.br.miraiscanner.Network.ScannerWiFi;
 
 public class MainActivity extends AppCompatActivity {
 
