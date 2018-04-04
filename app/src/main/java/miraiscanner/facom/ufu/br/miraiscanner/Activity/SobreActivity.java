@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import miraiscanner.facom.ufu.br.miraiscanner.R;
 
 /**
- * Created by MarceloPrado on 11/03/2018.
+ * Created by mirandagab and MarceloPrado on 11/03/2018.
  */
 
 public class SobreActivity extends AppCompatActivity {

@@ -18,6 +18,10 @@ import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.R;
 import miraiscanner.facom.ufu.br.miraiscanner.Network.ScannerWiFi;
 
+/**
+ * Created by mirandagab and MarceloPrado on 08/02/2018.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     //private Button botaoScan;

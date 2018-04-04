@@ -26,7 +26,7 @@ import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Network.MacAddress;
 
 /**
- * Created by mirandagab on 08/02/2018.
+ * Created by mirandagab and MarceloPrado on 08/02/2018.
  */
 
 public class ScannerWiFi extends AsyncTask<Void, Void, String>{

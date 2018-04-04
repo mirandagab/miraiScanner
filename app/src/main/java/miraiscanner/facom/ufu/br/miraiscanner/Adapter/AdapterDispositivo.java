@@ -14,7 +14,7 @@ import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.R;
 
 /**
- * Created by MarceloPrado on 12/03/2018.
+ * Created by mirandagab and MarceloPrado on 12/03/2018.
  */
 
 public class AdapterDispositivo extends BaseAdapter {

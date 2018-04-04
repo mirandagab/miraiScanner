@@ -1,7 +1,7 @@
 package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
 /**
- * Created by MarceloPrado on 02/04/2018.
+ * Created by mirandagab and MarceloPrado on 02/04/2018.
  */
 
 import java.io.BufferedReader;

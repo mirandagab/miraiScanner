@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Created by MarceloPrado on 03/04/2018.
+ * Created by mirandagab and MarceloPrado on 03/04/2018.
  */
 
 public class TimeLimitedCodeBlock {
