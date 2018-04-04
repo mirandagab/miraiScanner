@@ -18,12 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
-import miraiscanner.facom.ufu.br.miraiscanner.Network.MacAddress;
 
 /**
  * Created by mirandagab and MarceloPrado on 08/02/2018.
@@ -39,9 +36,9 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private String ips = "";
 
-    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapterList;
 
-    private AdapterDispositivo adapterTeste;
+    private AdapterDispositivo adapterDispositivo;
 
     private List<String> listaIpsString;
 
@@ -49,14 +46,14 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private ProgressDialog carregamento;
 
-    private Activity atv;
+    private Activity activity;
 
-    public ScannerWiFi(Context contexto, ArrayAdapter adapter, AdapterDispositivo adapterTeste, Activity atv){
+    public ScannerWiFi(Context contexto, ArrayAdapter adapterList, AdapterDispositivo adapterDispositivo, Activity activity){
         this.contexto = contexto;
         this.mContextRef = new WeakReference<Context>(contexto);
-        this.adapter = adapter;
-        this.adapterTeste = adapterTeste;
-        this.atv = atv;
+        this.adapterList = adapterList;
+        this.adapterDispositivo = adapterDispositivo;
+        this.activity = activity;
     }
 
     @Override
@@ -91,39 +88,39 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
                 Log.d(TAG, "prefix: " + prefix);
 
-                ExecutorService executor = Executors.newFixedThreadPool(85);
+                ExecutorService threadPool = Executors.newFixedThreadPool(85);
 
                 for (int i = 0; i < 255; i++) {
                     final String prefixo = prefix;
                     final int j = i;
-                    executor.execute(new Runnable() {
+                    threadPool.execute(new Runnable() {
                         @Override
                         public void run() {
-                            String testIp = prefixo + String.valueOf(j);
-                            InetAddress address = null;
+                            String verificandoIP = prefixo + String.valueOf(j);
+                            InetAddress enderecoInet = null;
                             try {
-                                address = InetAddress.getByName(testIp);
+                                enderecoInet = InetAddress.getByName(verificandoIP);
 
-                                if(address != null) {
+                                if(enderecoInet != null) {
                                     boolean reachable = false;
-                                    reachable = address.isReachable(500);
-                                    String hostName = address.getCanonicalHostName();
-                                    NetworkInterface niMac = NetworkInterface.getByInetAddress(address);
+                                    reachable = enderecoInet.isReachable(500);
+                                    String hostName = enderecoInet.getCanonicalHostName();
+                                    NetworkInterface niMac = NetworkInterface.getByInetAddress(enderecoInet);
 
                                     if (reachable) {
-                                        final String ip = testIp;
+                                        final String ip = verificandoIP;
                                         String endereco = "";
                                         if(niMac != null) {
-                                            byte[] endMac = niMac.getHardwareAddress();
+                                            byte[] enderecoMAC = niMac.getHardwareAddress();
                                             String mac;
-                                            if (endMac != null) {
-                                                for (int i = 0; i < endMac.length; i++)
-                                                    endereco += (String.format("%02X:", endMac[i]));
+                                            if (enderecoMAC != null) {
+                                                for (int i = 0; i < enderecoMAC.length; i++)
+                                                    endereco += (String.format("%02X:", enderecoMAC[i]));
                                                 endereco = endereco.substring(0, endereco.length() - 1);
                                             }
                                         }
                                         else
-                                            endereco = MacAddress.getByIpLinux(testIp);
+                                            endereco = MacAddress.getByIpLinux(verificandoIP);
 
                                         final String mac = endereco;
                                         final String hname = hostName;
@@ -133,25 +130,6 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                         listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
                                         Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
                                         ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
-
-
-                                        //Corrigir essa parte do código
-//                                        try {
-//                                            TimeLimitedCodeBlock.runWithTimeout(new Runnable() {
-//                                                @Override
-//                                                public void run() {
-//                                                    //As vezes retorna o resultado, as vezes não... Obrigar a esperar o retorno ou dar um certo timeout
-//                                                    String fabricante = MacVendorLookup.get(mac);
-//                                                    listaIpsString.add(String.valueOf(ip));
-//                                                    listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
-//                                                    Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
-//                                                    ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
-//                                                }
-//                                            }, 5, TimeUnit.SECONDS);
-//                                        }
-//                                        catch (TimeoutException e) {
-//                                            System.out.println("Erro na chamada do fabricante");
-//                                        }
                                     }
                                 }
                             } catch (Exception e) {
@@ -161,8 +139,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     });
                 } // Fim do FOR que percorre os 255 IPs
 
-                executor.shutdown();
-                while (!executor.isTerminated()) {
+                threadPool.shutdown();
+                while (!threadPool.isTerminated()) {
                     //Colocar uma barra de progresso
                 }
                 System.out.println("Escaneamento da rede WiFi concluído!");
@@ -182,11 +160,11 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
         super.onPostExecute(textoExibicao);
 
         if(textoExibicao != "" && textoExibicao != null) {
-            adapter.clear();
-            adapter.addAll(listaIpsString);
-            //adapter.notifyDataSetChanged();
+            adapterList.clear();
+            adapterList.addAll(listaIpsString);
+            //adapterList.notifyDataSetChanged();
 
-            adapterTeste.setDispositivos(listaDispositivos);
+            adapterDispositivo.setDispositivos(listaDispositivos);
 
             Log.i(TAG, "Setando resultados na tela via Async.");
         }
