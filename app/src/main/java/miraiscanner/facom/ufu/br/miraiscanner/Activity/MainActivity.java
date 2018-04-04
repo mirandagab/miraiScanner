@@ -20,7 +20,7 @@ import miraiscanner.facom.ufu.br.miraiscanner.Network.ScannerWiFi;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button botaoScan;
+    //private Button botaoScan;
     private android.support.v7.widget.Toolbar toolbar;
     private ListView listaDeIpsConectados;
     private ArrayAdapter<String> adapter;

@@ -50,8 +50,8 @@ public class AdapterDispositivo extends BaseAdapter {
                 view.findViewById(R.id.lista_dispositivo_nome);
         TextView ip = (TextView)
                 view.findViewById(R.id.lista_dispositivo_descricao);
-        TextView fabricante = (TextView)
-                view.findViewById(R.id.lista_dispositivo_fabricante);
+//        TextView fabricante = (TextView)
+//                view.findViewById(R.id.lista_dispositivo_fabricante);
         TextView mac = (TextView)
                 view.findViewById(R.id.lista_dispositivo_mac);
         ImageView imagem = (ImageView)
@@ -60,7 +60,7 @@ public class AdapterDispositivo extends BaseAdapter {
         //populando as Views
         nome.setText(dispositivo.getNome());
         ip.setText(dispositivo.getIp());
-        fabricante.setText(dispositivo.getFabricante());
+//        fabricante.setText(dispositivo.getFabricante());
         mac.setText(dispositivo.getMac());
 
         switch(dispositivo.getTipo()){

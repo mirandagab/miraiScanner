@@ -91,7 +91,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
                 Log.d(TAG, "prefix: " + prefix);
 
-                ExecutorService executor = Executors.newFixedThreadPool(100);
+                ExecutorService executor = Executors.newFixedThreadPool(85);
 
                 for (int i = 0; i < 255; i++) {
                     final String prefixo = prefix;
@@ -106,7 +106,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                                 if(address != null) {
                                     boolean reachable = false;
-                                    reachable = address.isReachable(1000);
+                                    reachable = address.isReachable(500);
                                     String hostName = address.getCanonicalHostName();
                                     NetworkInterface niMac = NetworkInterface.getByInetAddress(address);
 
