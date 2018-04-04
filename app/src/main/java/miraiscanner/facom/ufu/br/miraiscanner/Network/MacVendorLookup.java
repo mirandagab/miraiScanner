@@ -2,6 +2,8 @@ package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
 /**
  * Created by mirandagab and MarceloPrado on 02/04/2018.
+ *
+ * créditos: www.macvendors.com
  */
 
 import java.io.BufferedReader;
@@ -41,7 +43,7 @@ public class MacVendorLookup {
             return result.toString();
         } catch (FileNotFoundException e) {
             // MAC não encontrado
-            return "Fabricante Desconhecido";
+            return "Desconhecido";
         } catch (IOException e) {
             // Qualquer erro durante a busca
             return "Erro durante a busca";

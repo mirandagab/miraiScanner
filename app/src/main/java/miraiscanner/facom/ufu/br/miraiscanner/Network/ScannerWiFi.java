@@ -159,7 +159,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                             }
                         }
                     });
-                }
+                } // Fim do FOR que percorre os 255 IPs
 
                 executor.shutdown();
                 while (!executor.isTerminated()) {

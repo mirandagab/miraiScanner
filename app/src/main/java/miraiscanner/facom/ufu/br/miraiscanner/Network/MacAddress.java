@@ -2,6 +2,8 @@ package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
 /**
  * Created by mirandagab and MarceloPrado on 03/04/2018.
+ *
+ * créditos: evercam (https://github.com/evercam)
  */
 
 import java.io.BufferedReader;
