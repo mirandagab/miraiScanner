@@ -16,6 +16,7 @@ public class Dispositivo {
         this.ip = ip;
         this.mac = mac.toUpperCase();
         this.tipo = "Genérico";
+        this.fabricante = "Indisponível";
     }
 
     public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante){

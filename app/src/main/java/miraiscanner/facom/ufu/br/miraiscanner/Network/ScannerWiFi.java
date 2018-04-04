@@ -125,9 +125,9 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                         final String mac = endereco;
                                         final String hname = hostName;
 
-                                        String fabricante = MacVendorLookup.get(mac);
+//                                        String fabricante = MacVendorLookup.get(mac);
                                         listaIpsString.add(String.valueOf(ip));
-                                        listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
+                                        listaDispositivos.add(new Dispositivo(ip, mac));
                                         Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
                                         ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
                                     }
@@ -143,6 +143,13 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 while (!threadPool.isTerminated()) {
                     //Colocar uma barra de progresso
                 }
+
+                //chamar a API de verificar Fabricante por MAC
+                for(Dispositivo dispositivo : listaDispositivos){
+                    String fabricante = MacVendorLookup.get(dispositivo.getMac());
+                    dispositivo.setFabricante(fabricante);
+                }
+
                 System.out.println("Escaneamento da rede WiFi concluído!");
             }
         } catch (Throwable t) {
