@@ -41,10 +41,10 @@ public class MacVendorLookup {
             return result.toString();
         } catch (FileNotFoundException e) {
             // MAC não encontrado
-            return "N/A";
+            return "Fabricante Desconhecido";
         } catch (IOException e) {
             // Qualquer erro durante a busca
-            return "N/A";
+            return "Erro durante a busca";
         }
     }
 }

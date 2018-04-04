@@ -128,24 +128,30 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                         final String mac = endereco;
                                         final String hname = hostName;
 
+                                        String fabricante = MacVendorLookup.get(mac);
+                                        listaIpsString.add(String.valueOf(ip));
+                                        listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
+                                        Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
+                                        ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
+
 
                                         //Corrigir essa parte do código
-                                        try {
-                                            TimeLimitedCodeBlock.runWithTimeout(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    //As vezes retorna o resultado, as vezes não... Obrigar a esperar o retorno ou dar um certo timeout
-                                                    String fabricante = MacVendorLookup.get(mac);
-                                                    listaIpsString.add(String.valueOf(ip));
-                                                    listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
-                                                    Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
-                                                    ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
-                                                }
-                                            }, 5, TimeUnit.SECONDS);
-                                        }
-                                        catch (TimeoutException e) {
-                                            System.out.println("Erro na chamada do fabricante");
-                                        }
+//                                        try {
+//                                            TimeLimitedCodeBlock.runWithTimeout(new Runnable() {
+//                                                @Override
+//                                                public void run() {
+//                                                    //As vezes retorna o resultado, as vezes não... Obrigar a esperar o retorno ou dar um certo timeout
+//                                                    String fabricante = MacVendorLookup.get(mac);
+//                                                    listaIpsString.add(String.valueOf(ip));
+//                                                    listaDispositivos.add(new Dispositivo("Genérico", ip, mac, "Genérico", fabricante));
+//                                                    Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
+//                                                    ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
+//                                                }
+//                                            }, 5, TimeUnit.SECONDS);
+//                                        }
+//                                        catch (TimeoutException e) {
+//                                            System.out.println("Erro na chamada do fabricante");
+//                                        }
                                     }
                                 }
                             } catch (Exception e) {
