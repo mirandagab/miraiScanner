@@ -11,6 +11,10 @@ import android.os.AsyncTask;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -21,6 +25,7 @@ import java.util.concurrent.Executors;
 
 import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
+import miraiscanner.facom.ufu.br.miraiscanner.R;
 
 /**
  * Created by mirandagab and MarceloPrado on 08/02/2018.
@@ -47,6 +52,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
     private ProgressDialog carregamento;
 
     private Activity activity;
+
+    private String redeWifi;
 
     public ScannerWiFi(Context contexto, ArrayAdapter adapterList, AdapterDispositivo adapterDispositivo, Activity activity){
         this.contexto = contexto;
@@ -79,6 +86,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                 WifiInfo connectionInfo = wm.getConnectionInfo();
                 int ipAddress = connectionInfo.getIpAddress();
+                this.redeWifi = connectionInfo.getSSID().substring(1, connectionInfo.getSSID().length() - 1);
                 String ipString = Formatter.formatIpAddress(ipAddress);
 
                 Log.d(TAG, "activeNetwork: " + String.valueOf(activeNetwork));
@@ -172,6 +180,14 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
             //adapterList.notifyDataSetChanged();
 
             adapterDispositivo.setDispositivos(listaDispositivos);
+            TextView nome_rede = (TextView) activity.findViewById(R.id.rede_wifi);
+            if(!this.redeWifi.equals("unknown ssid"))
+                nome_rede.setText(this.redeWifi);
+            else
+                nome_rede.setText("Rede desconhecida");
+
+            TextView qtdDispositivos = (TextView) activity.findViewById(R.id.qtd_dispositivos);
+            qtdDispositivos.setText(listaIpsString.size() + "");
 
             Log.i(TAG, "Setando resultados na tela via Async.");
         }
