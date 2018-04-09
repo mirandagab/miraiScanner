@@ -165,8 +165,10 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     String fabricante = MacVendorLookup.get(dispositivo.getMac());
                     dispositivo.setFabricante(fabricante);
                     ScannerPortas escanerPortas = new ScannerPortas(dispositivo.getIp());
-                    dispositivo.setPorta23Aberta(escanerPortas.porta23EstaAberta());
-                    dispositivo.setPorta48101Aberta(escanerPortas.porta48101EstaAberta());
+                    if(escanerPortas.porta23EstaAberta())
+                        dispositivo.setPorta23Aberta("Aberta");
+                    if(escanerPortas.porta48101EstaAberta())
+                        dispositivo.setPorta48101Aberta("Aberta");
                 }
 
                 System.out.println("Escaneamento da rede WiFi concluído!");
