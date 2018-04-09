@@ -1,5 +1,6 @@
 package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -19,6 +20,9 @@ public class ScannerPortas {
             socket.connect(new InetSocketAddress(this.endereco, 23), 500);
             socket.close();
             return true;
+        } catch(ConnectException c){
+            System.out.println("[porta23] Não foi possível conectar. Erro: " + c);
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[porta23] Erro: " + e);
@@ -32,6 +36,9 @@ public class ScannerPortas {
             socket.connect(new InetSocketAddress(this.endereco, 48101), 500);
             socket.close();
             return true;
+        } catch(ConnectException c){
+            System.out.println("[porta48101] Não foi possível conectar. Erro: " + c);
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[porta48101] Erro: " + e);
