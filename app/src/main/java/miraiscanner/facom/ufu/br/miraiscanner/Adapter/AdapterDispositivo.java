@@ -56,12 +56,18 @@ public class AdapterDispositivo extends BaseAdapter {
                 view.findViewById(R.id.lista_dispositivo_mac);
         ImageView imagem = (ImageView)
                 view.findViewById(R.id.lista_dispositivo_imagem);
+        TextView porta23 = (TextView)
+                view.findViewById(R.id.porta23Aberta);
+        TextView porta48101 = (TextView)
+                view.findViewById(R.id.porta48101Aberta);
 
         //populando as Views
         nome.setText(dispositivo.getNome());
         ip.setText(dispositivo.getIp());
         fabricante.setText(dispositivo.getFabricante());
         mac.setText(dispositivo.getMac());
+        porta23.setText(dispositivo.getPorta23Aberta());
+        porta48101.setText(dispositivo.getPorta48101Aberta());
 
         switch(dispositivo.getTipo()){
             case "Celular":
