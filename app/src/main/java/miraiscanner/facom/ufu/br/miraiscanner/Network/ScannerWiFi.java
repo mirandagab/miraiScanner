@@ -111,7 +111,11 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                                 if(enderecoInet != null) {
                                     boolean reachable = false;
-                                    reachable = enderecoInet.isReachable(500);
+//                                    reachable = enderecoInet.isReachable(500);
+
+                                    ScannerTCP escanerTCP = new ScannerTCP(verificandoIP);
+                                    reachable = escanerTCP.executarPing();
+
                                     String hostName = enderecoInet.getCanonicalHostName();
                                     NetworkInterface niMac = NetworkInterface.getByInetAddress(enderecoInet);
 
