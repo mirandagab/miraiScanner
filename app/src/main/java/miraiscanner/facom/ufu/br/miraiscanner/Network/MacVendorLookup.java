@@ -16,13 +16,6 @@ import java.net.URL;
 public class MacVendorLookup {
     /** URL Base para API dos fornecedores: www.macvendors.com */
     private static final String baseURL = "https://api.macvendors.com/";
-    /*
-    /** Recebe os endereços MAC passados como argumento.
-     * @param args endereço MAC
-    public static void main(String[] args) {
-        for (String arguments : args)
-            System.out.println(arguments + ": " + get(arguments));
-    }*/
 
     /** Realiza a busca pelo fornecedor de acordo com o endereço MAC.
      * @param macAddress endereço MAC.

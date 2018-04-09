@@ -11,20 +11,30 @@ public class Dispositivo {
     private String tipo;
     private String fabricante;
 
+    //portas 23 e 48101
+    //esta variavel indica se a porta está aberta (true)
+    //ou fechada (false)
+    private boolean porta23Aberta;
+    private boolean porta48101Aberta;
+
     public Dispositivo(String ip, String mac){
         this.nome = "Genérico";
         this.ip = ip;
         this.mac = mac.toUpperCase();
         this.tipo = "Genérico";
         this.fabricante = "Indisponível";
+        this.porta23Aberta = false;
+        this.porta48101Aberta = false;
     }
 
-    public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante){
+    public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante, boolean porta23Aberta, boolean porta48101Aberta){
         this.nome = nome;
         this.ip = ip;
         this.tipo = tipo;
         this.mac = mac.toUpperCase();
         this.fabricante = fabricante;
+        this.porta23Aberta = porta23Aberta;
+        this.porta48101Aberta = porta48101Aberta;
     }
 
     public String getNome() {
@@ -62,4 +72,12 @@ public class Dispositivo {
     public void setFabricante(String fabricante) {
         this.fabricante = fabricante;
     }
+
+    public boolean getPorta23Aberta(){ return this.porta23Aberta; }
+
+    public void setPorta23Aberta(boolean porta23Aberta) { this.porta23Aberta = porta23Aberta; }
+
+    public boolean getPorta48101Aberta(){ return this.porta48101Aberta; }
+
+    public void setPorta48101Aberta(boolean porta48101Aberta) { this.porta48101Aberta = porta48101Aberta; }
 }

@@ -111,6 +111,9 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                                 if(enderecoInet != null) {
                                     boolean reachable = false;
+
+//                                    esta parte do código foi retirada e trocada pelo
+//                                    ScannerTCP por questões de melhora nos resultados
 //                                    reachable = enderecoInet.isReachable(500);
 
                                     ScannerTCP escanerTCP = new ScannerTCP(verificandoIP);
