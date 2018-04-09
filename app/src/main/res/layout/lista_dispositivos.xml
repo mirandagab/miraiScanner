@@ -85,7 +85,7 @@
                         android:id="@+id/porta23Aberta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Closed"
+                        android:text="N/A"
                         android:textAlignment="textEnd"
                         android:textSize="12sp" />
 
@@ -93,7 +93,7 @@
                         android:id="@+id/porta48101Aberta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Closed"
+                        android:text="N/A"
                         android:textAlignment="textEnd"
                         android:textSize="12sp" />
                 </LinearLayout>
