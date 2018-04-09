@@ -32,6 +32,10 @@ public class ScannerTCP {
 
             System.out.println("Valor de saída: " + valorDeSaida);
 
+            processo.getInputStream().close();
+            processo.getOutputStream().close();
+            processo.getErrorStream().close();
+
             return (valorDeSaida == 0);
 
         } catch (IOException e){
@@ -41,7 +45,6 @@ public class ScannerTCP {
             e.printStackTrace();
             System.out.println("[ScannerTCP] Interrução: " + e);
         }
-
         return false;
     }
 }
