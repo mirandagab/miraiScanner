@@ -55,7 +55,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private String redeWifi;
 
-    public ScannerWiFi(Context contexto, ArrayAdapter adapterList, AdapterDispositivo adapterDispositivo, Activity activity){
+    public ScannerWiFi(Context contexto, ArrayAdapter adapterList,
+                       AdapterDispositivo adapterDispositivo, Activity activity){
         this.contexto = contexto;
         this.mContextRef = new WeakReference<Context>(contexto);
         this.adapterList = adapterList;
@@ -66,7 +67,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        carregamento = ProgressDialog.show(contexto, "Por favor aguarde", "Escaneando a rede WiFi");
+        carregamento = ProgressDialog.show(contexto, "Por favor aguarde",
+                "Escaneando a rede WiFi");
     }
 
     @Override
@@ -91,7 +93,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                 Log.d(TAG, "activeNetwork: " + String.valueOf(activeNetwork));
                 Log.d(TAG, "ipString: " + String.valueOf(ipString));
-                ips += "activeNetwork: " + String.valueOf(activeNetwork) + "ipString: " + String.valueOf(ipString);
+                ips += "activeNetwork: " + String.valueOf(activeNetwork) + "ipString: "
+                        + String.valueOf(ipString);
 
                 String prefix = ipString.substring(0, ipString.lastIndexOf(".") + 1);
                 Log.d(TAG, "prefix: " + prefix);
@@ -113,7 +116,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                                     boolean reachable = false;
 
 //                                    esta parte do código foi retirada e trocada pelo
-//                                    ScannerTCP por questões de melhora nos resultados
+//                                    ScannerTCP devido a maior estabilidade nos resultados
 //                                    reachable = enderecoInet.isReachable(500);
 
                                     ScannerTCP escanerTCP = new ScannerTCP(verificandoIP);
@@ -143,8 +146,10 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 //                                        String fabricante = MacVendorLookup.get(mac);
                                         listaIpsString.add(String.valueOf(ip));
                                         listaDispositivos.add(new Dispositivo(ip, mac));
-                                        Log.i(TAG, "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!");
-                                        ips += "Host: " + String.valueOf(hname) + "(" + String.valueOf(ip) + ") está acessível!";
+                                        Log.i(TAG, "Host: " + String.valueOf(hname) +
+                                                "(" + String.valueOf(ip) + ") está acessível!");
+                                        ips += "Host: " + String.valueOf(hname) +
+                                                "(" + String.valueOf(ip) + ") está acessível!";
                                     }
                                 }
                             } catch (Exception e) {
@@ -167,15 +172,19 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     ScannerPortas escanerPortas = new ScannerPortas(dispositivo.getIp());
                     if(escanerPortas.porta23EstaAberta()) {
                         dispositivo.setPorta23Aberta("Aberta");
-                        System.out.println("Dispositivo [" + dispositivo.getIp() + "] está com a porta 23 aberta.");
+                        System.out.println("Dispositivo [" + dispositivo.getIp() +
+                                "] está com a porta 23 aberta.");
                     }else{
-                        System.out.println("Dispositivo [" + dispositivo.getIp() + "] está com a porta 23 fechada.");
+                        System.out.println("Dispositivo [" + dispositivo.getIp() +
+                                "] está com a porta 23 fechada.");
                     }
                     if(escanerPortas.porta48101EstaAberta()) {
                         dispositivo.setPorta48101Aberta("Aberta");
-                        System.out.println("Dispositivo [" + dispositivo.getIp() + "] está com a porta 48101 aberta.");
+                        System.out.println("Dispositivo [" + dispositivo.getIp() +
+                                "] está com a porta 48101 aberta.");
                     }else{
-                        System.out.println("Dispositivo [" + dispositivo.getIp() + "] está com a porta 48101 fechada.");
+                        System.out.println("Dispositivo [" + dispositivo.getIp() +
+                                "] está com a porta 48101 fechada.");
                     }
                 }
 

@@ -12,8 +12,7 @@ public class Dispositivo {
     private String fabricante;
 
     //portas 23 e 48101
-    //esta variavel indica se a porta está aberta (true)
-    //ou fechada (false)
+    //estas variaveis indicam se as portas estão abertas ou fechadas
     private String porta23Aberta;
     private String porta48101Aberta;
 
@@ -27,7 +26,8 @@ public class Dispositivo {
         this.porta48101Aberta = "Fechada";
     }
 
-    public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante, String porta23Aberta, String porta48101Aberta){
+    public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante,
+                       String porta23Aberta, String porta48101Aberta){
         this.nome = nome;
         this.ip = ip;
         this.tipo = tipo;
