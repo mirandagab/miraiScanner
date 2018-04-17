@@ -4,49 +4,69 @@ import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
+
 /**
  * Created by mirandagab and MarceloPrado on 09/04/2018.
  */
 public class ScannerPortas {
-    private String endereco;
+    private Dispositivo dispositivo;
 
-    public ScannerPortas(String ip){
-        this.endereco = ip;
+    public ScannerPortas(Dispositivo dispositivo){
+        this.dispositivo = dispositivo;
     }
 
-    public boolean porta23EstaAberta() {
+    public boolean statusPorta23() {
         try {
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(this.endereco, 23), 500);
+            socket.connect(new InetSocketAddress(this.dispositivo.getIp(), 23), 500);
             socket.close();
+            dispositivo.setPorta23Aberta("Aberta");
+            System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 23 aberta.");
             return true;
         } catch(ConnectException c){
             System.out.println("[porta23] Não foi possível conectar. Erro: " + c);
+            dispositivo.setPorta23Aberta("Fechada");
+            System.out.println("[ConnectException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 23 fechada.");
             return false;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[porta23] Erro: " + e);
+            dispositivo.setPorta23Aberta("Fechada");
+            System.out.println("[Exception]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 23 fechada.");
             return false;
         }
     }
 
-    public boolean porta48101EstaAberta() {
+    public boolean statusPorta48101() {
         try {
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(this.endereco, 48101), 500);
+            socket.connect(new InetSocketAddress(this.dispositivo.getIp(), 48101), 500);
             socket.close();
+            dispositivo.setPorta48101Aberta("Aberta");
+            System.out.println("Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 48101 fechada.");
             return true;
         } catch(ConnectException c){
             System.out.println("[porta48101] Não foi possível conectar. Erro: " + c);
+            dispositivo.setPorta48101Aberta("Fechada");
+            System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 48101 fechada.");
             return false;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[porta48101] Erro: " + e);
+            dispositivo.setPorta48101Aberta("Fechada");
+            System.out.println("[Exception]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 48101 fechada.");
             return false;
         }
     }
 
-    public String getEndereco() { return endereco; }
+    public Dispositivo getDispositivo() { return dispositivo; }
 
-    public void setEndereco(String endereco) { this.endereco = endereco; }
+    public void setDispositivo(Dispositivo dispositivo) { this.dispositivo = dispositivo; }
 }
