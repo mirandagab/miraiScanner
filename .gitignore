@@ -10,6 +10,6 @@
 build.gradle
 gradle.properties
 gradle-wrapper.properties
-.idea/misc.xml
+/.idea/misc.xml
 app/build.gradle
 gradle/wrapper/gradle-wrapper.properties
