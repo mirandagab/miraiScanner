@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,11 +31,17 @@ public class MainActivity extends AppCompatActivity {
     private ListView listaDeIpsConectados;
     private ArrayAdapter<String> adapter;
     private AdapterDispositivo adapterTeste;
+    private TextView textoProgresso;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //criação da progressBar
+        progressBar = (ProgressBar) findViewById(R.id.barraProgresso);
+        textoProgresso = (TextView) findViewById(R.id.textoProgresso);
 
         //criação da toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fazerEscaneamentoAsync() {
-        ScannerWiFi scannerWiFi = new ScannerWiFi(MainActivity.this, adapter, adapterTeste, this);
+        ScannerWiFi scannerWiFi = new ScannerWiFi(MainActivity.this, adapter, adapterTeste,
+                this, progressBar, textoProgresso);
         scannerWiFi.execute();
     }
 }

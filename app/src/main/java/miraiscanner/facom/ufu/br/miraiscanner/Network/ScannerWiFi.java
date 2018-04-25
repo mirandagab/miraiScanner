@@ -10,7 +10,9 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -49,26 +51,39 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private List<Dispositivo> listaDispositivos;
 
-    private ProgressDialog carregamento;
+//    private ProgressDialog carregamento;
 
     private Activity activity;
 
     private String redeWifi;
 
+    private ProgressBar progressBar;
+
+    private TextView textoProgresso;
+
+    private static int PROGRESSO = 1;
+
+    private int total = 0;
+
     public ScannerWiFi(Context contexto, ArrayAdapter adapterList,
-                       AdapterDispositivo adapterDispositivo, Activity activity){
+                       AdapterDispositivo adapterDispositivo, Activity activity,
+                       ProgressBar progressBar, TextView textoProgresso){
         this.contexto = contexto;
         this.mContextRef = new WeakReference<Context>(contexto);
         this.adapterList = adapterList;
         this.adapterDispositivo = adapterDispositivo;
         this.activity = activity;
+        this.textoProgresso = textoProgresso;
+        this.progressBar = progressBar;
     }
 
     @Override
     protected void onPreExecute() {
+        textoProgresso.setText("0%");
+
         super.onPreExecute();
-        carregamento = ProgressDialog.show(contexto, "Por favor aguarde",
-                "Escaneando a rede WiFi");
+//        carregamento = ProgressDialog.show(contexto, "Por favor aguarde",
+//                "Escaneando a rede WiFi");
     }
 
     @Override
@@ -161,6 +176,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                 threadPool.shutdown();
                 while (!threadPool.isTerminated()) {
+                    publishProgress();
+                    Thread.sleep(300);
                     //Colocar uma barra de progresso
                 }
 
@@ -169,9 +186,9 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 for(Dispositivo dispositivo : listaDispositivos){
                     String fabricante = MacVendorLookup.get(dispositivo.getMac());
                     dispositivo.setFabricante(fabricante);
-                    ScannerPortas escanerPortas = new ScannerPortas(dispositivo);
-                    escanerPortas.statusPorta23();
-                    escanerPortas.statusPorta48101();
+                    ScannerPortas scannerPortas = new ScannerPortas(dispositivo);
+                    scannerPortas.statusPorta23();
+                    scannerPortas.statusPorta48101();
 //                    if(escanerPortas.porta23EstaAberta()) {
 //                        dispositivo.setPorta23Aberta("Aberta");
 //                        System.out.println("Dispositivo [" + dispositivo.getIp() +
@@ -197,6 +214,14 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
         }
 
         return ips;
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+        total += PROGRESSO;
+        progressBar.incrementProgressBy(PROGRESSO);
+        textoProgresso.setText(total + "%");
     }
 
     //Retorna resultados para a thread de exibição ao usuário
@@ -226,7 +251,12 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
         else {
             Log.e(TAG, "Erro ao setar o texto na tela via Async.");
         }
+
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        textoProgresso.setText("Rede escaneada");
+        textoProgresso.setGravity(Gravity.CENTER_HORIZONTAL);
+
         //Tirando o ProgressDialog da tela
-        carregamento.dismiss();
+//        carregamento.dismiss();
     }
 }
