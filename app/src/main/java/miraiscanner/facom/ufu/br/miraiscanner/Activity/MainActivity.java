@@ -1,6 +1,9 @@
 package miraiscanner.facom.ufu.br.miraiscanner.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -83,8 +87,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fazerEscaneamentoAsync() {
-        ScannerWiFi scannerWiFi = new ScannerWiFi(MainActivity.this, adapter, adapterTeste,
-                this, progressBar, textoProgresso);
-        scannerWiFi.execute();
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo tipoRede = cm.getActiveNetworkInfo();
+        if(tipoRede.getType() == ConnectivityManager.TYPE_WIFI) {
+            ScannerWiFi scannerWiFi = new ScannerWiFi(MainActivity.this, adapter, adapterTeste,
+                    this, progressBar, textoProgresso);
+            scannerWiFi.execute();
+        }else{
+            Toast.makeText(this, "Sem conexão WiFi", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
