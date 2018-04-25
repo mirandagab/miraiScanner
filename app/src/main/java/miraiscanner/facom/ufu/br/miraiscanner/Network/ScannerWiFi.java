@@ -20,10 +20,12 @@ import org.w3c.dom.Text;
 import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import miraiscanner.facom.ufu.br.miraiscanner.Adapter.AdapterDispositivo;
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
@@ -61,9 +63,9 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private TextView textoProgresso;
 
-    private static int PROGRESSO = 1;
+    private static int PROGRESSO = 39;
 
-    private int total = 0;
+    private double total, totalAux = 0;
 
     public ScannerWiFi(Context contexto, ArrayAdapter adapterList,
                        AdapterDispositivo adapterDispositivo, Activity activity,
@@ -79,8 +81,13 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     @Override
     protected void onPreExecute() {
+        total = 0;
+        progressBar.setMax(10000);
+        progressBar.setProgress(0);
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+        textoProgresso.setGravity(Gravity.CENTER_HORIZONTAL);
+        textoProgresso.setVisibility(TextView.VISIBLE);
         textoProgresso.setText("0%");
-
         super.onPreExecute();
 //        carregamento = ProgressDialog.show(contexto, "Por favor aguarde",
 //                "Escaneando a rede WiFi");
@@ -170,14 +177,15 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                             } catch (Exception e) {
                                 Log.e(TAG, "Algo deu errado.", e);
                             }
+                            publishProgress();
                         }
                     });
                 } // Fim do FOR que percorre os 255 IPs
 
                 threadPool.shutdown();
                 while (!threadPool.isTerminated()) {
-                    publishProgress();
-                    Thread.sleep(300);
+//                    publishProgress();
+//                    Thread.sleep(300);
                     //Colocar uma barra de progresso
                 }
 
@@ -219,9 +227,12 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
-        total += PROGRESSO;
+        total += (PROGRESSO / 100d);
+        totalAux = Math.ceil(total);
         progressBar.incrementProgressBy(PROGRESSO);
-        textoProgresso.setText(total + "%");
+        String texto = String.valueOf(totalAux);
+        texto += " %";
+        textoProgresso.setText(texto);
     }
 
     //Retorna resultados para a thread de exibição ao usuário
@@ -254,7 +265,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         textoProgresso.setText("Rede escaneada");
-        textoProgresso.setGravity(Gravity.CENTER_HORIZONTAL);
+        textoProgresso.setVisibility(TextView.INVISIBLE);
 
         //Tirando o ProgressDialog da tela
 //        carregamento.dismiss();
