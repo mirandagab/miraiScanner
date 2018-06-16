@@ -15,6 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
 import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
@@ -266,6 +269,15 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
         progressBar.setVisibility(ProgressBar.INVISIBLE);
         textoProgresso.setText("Rede escaneada");
         textoProgresso.setVisibility(TextView.INVISIBLE);
+
+        //Enviando notificação teste avisando sobre a quantidade de dispositivos
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        AtomicInteger msgID = new AtomicInteger();
+        fm.send(new RemoteMessage.Builder("notificacaomirai" + "@gcm.googleapis.com")
+                .setMessageId(Integer.toString(msgID.incrementAndGet()))
+                .addData("my_message", "Hello World")
+                .addData("my_action","SAY_HELLO")
+                .build());
 
         //Tirando o ProgressDialog da tela
 //        carregamento.dismiss();
