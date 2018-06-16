@@ -144,8 +144,8 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 //                                    ScannerTCP devido a maior estabilidade nos resultados
 //                                    reachable = enderecoInet.isReachable(500);
 
-                                    ScannerTCP escanerTCP = new ScannerTCP(verificandoIP);
-                                    reachable = escanerTCP.executarPing();
+                                    ScannerTCP scannerTCP = new ScannerTCP(verificandoIP);
+                                    reachable = scannerTCP.executarPing();
 
                                     String hostName = enderecoInet.getCanonicalHostName();
                                     NetworkInterface niMac = NetworkInterface.getByInetAddress(enderecoInet);
@@ -187,9 +187,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
                 threadPool.shutdown();
                 while (!threadPool.isTerminated()) {
-//                    publishProgress();
-//                    Thread.sleep(300);
-                    //Colocar uma barra de progresso
+                    //Espera o término da pool antes de continuar
                 }
 
                 //chamar a API de verificar Fabricante por MAC
@@ -200,22 +198,6 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     ScannerPortas scannerPortas = new ScannerPortas(dispositivo);
                     scannerPortas.statusPorta23();
                     scannerPortas.statusPorta48101();
-//                    if(escanerPortas.porta23EstaAberta()) {
-//                        dispositivo.setPorta23Aberta("Aberta");
-//                        System.out.println("Dispositivo [" + dispositivo.getIp() +
-//                                "] está com a porta 23 aberta.");
-//                    }else{
-//                        System.out.println("Dispositivo [" + dispositivo.getIp() +
-//                                "] está com a porta 23 fechada.");
-//                    }
-//                    if(escanerPortas.porta48101EstaAberta()) {
-//                        dispositivo.setPorta48101Aberta("Aberta");
-//                        System.out.println("Dispositivo [" + dispositivo.getIp() +
-//                                "] está com a porta 48101 aberta.");
-//                    }else{
-//                        System.out.println("Dispositivo [" + dispositivo.getIp() +
-//                                "] está com a porta 48101 fechada.");
-//                    }
                 }
 
                 System.out.println("Escaneamento da rede WiFi concluído!");
