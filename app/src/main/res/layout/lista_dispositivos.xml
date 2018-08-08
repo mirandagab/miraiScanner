@@ -6,7 +6,8 @@
     android:weightSum="16"
     android:paddingTop="10dp"
     android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -49,7 +50,7 @@
                 android:text="descriçao"
                 android:textSize="12sp" />
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -65,7 +66,8 @@
                         android:layout_height="wrap_content"
                         android:text="Porta 23: "
                         android:textAlignment="textStart"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="invisible"/>
 
                     <TextView
                         android:id="@+id/label_porta48101"
@@ -73,7 +75,8 @@
                         android:layout_height="wrap_content"
                         android:text="Porta 48101: "
                         android:textAlignment="textStart"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="invisible"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -87,7 +90,8 @@
                         android:layout_height="wrap_content"
                         android:text="N/A"
                         android:textAlignment="textEnd"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="invisible"/>
 
                     <TextView
                         android:id="@+id/porta48101Aberta"
@@ -95,10 +99,12 @@
                         android:layout_height="wrap_content"
                         android:text="N/A"
                         android:textAlignment="textEnd"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="invisible"/>
                 </LinearLayout>
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -125,4 +131,13 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+
 </RelativeLayout>

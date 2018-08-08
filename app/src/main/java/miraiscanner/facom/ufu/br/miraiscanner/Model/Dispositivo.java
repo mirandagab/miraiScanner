@@ -1,10 +1,14 @@
 package miraiscanner.facom.ufu.br.miraiscanner.Model;
 
+import android.text.BoringLayout;
+
+import java.io.Serializable;
+
 /**
  * Created by mirandagab and MarceloPrado on 12/03/2018.
  */
 
-public class Dispositivo {
+public class Dispositivo implements Serializable{
     private String nome;
     private String ip;
     private String mac;
@@ -13,8 +17,8 @@ public class Dispositivo {
 
     //portas 23 e 48101
     //estas variaveis indicam se as portas estão abertas ou fechadas
-    private String porta23Aberta;
-    private String porta48101Aberta;
+    private Boolean porta23Aberta;
+    private Boolean porta48101Aberta;
 
     public Dispositivo(String ip, String mac){
         this.nome = "Genérico";
@@ -22,12 +26,12 @@ public class Dispositivo {
         this.mac = mac.toUpperCase();
         this.tipo = "Genérico";
         this.fabricante = "Indisponível";
-        this.porta23Aberta = "Fechada";
-        this.porta48101Aberta = "Fechada";
+        this.porta23Aberta = false;
+        this.porta48101Aberta = false;
     }
 
     public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante,
-                       String porta23Aberta, String porta48101Aberta){
+                       Boolean porta23Aberta, Boolean porta48101Aberta){
         this.nome = nome;
         this.ip = ip;
         this.tipo = tipo;
@@ -73,11 +77,11 @@ public class Dispositivo {
         this.fabricante = fabricante;
     }
 
-    public String getPorta23Aberta(){ return this.porta23Aberta; }
+    public Boolean getPorta23Aberta(){ return this.porta23Aberta; }
 
-    public void setPorta23Aberta(String porta23Aberta) { this.porta23Aberta = porta23Aberta; }
+    public void setPorta23Aberta(Boolean porta23Aberta) { this.porta23Aberta = porta23Aberta; }
 
-    public String getPorta48101Aberta(){ return this.porta48101Aberta; }
+    public Boolean getPorta48101Aberta(){ return this.porta48101Aberta; }
 
-    public void setPorta48101Aberta(String porta48101Aberta) { this.porta48101Aberta = porta48101Aberta; }
+    public void setPorta48101Aberta(Boolean porta48101Aberta) { this.porta48101Aberta = porta48101Aberta; }
 }

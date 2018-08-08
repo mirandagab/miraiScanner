@@ -6,4 +6,10 @@
     <dimen name="tamanhoTextoSecundario">16sp</dimen>
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="espacamento_listview">10dp</dimen>
+    <dimen name="width_height_progress">50dp</dimen>
+    <dimen name="width_arc_background">500dp</dimen>
+    <dimen name="width_arc_primary">500dp</dimen>
+    <dimen name="text_size_progress">20sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

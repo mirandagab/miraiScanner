@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -12,36 +13,29 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textoProgresso"/>
-
-    <ProgressBar
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:max="10000"
-        android:id="@+id/barraProgresso"/>
+        />
 
     <LinearLayout
+        android:id="@+id/layoutRedeWifi"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:background="#dae9f1">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/rede_wifi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:text="@string/dispositivos_encontrados"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_margin="16dp"/>
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -49,7 +43,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textoProgresso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="10"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/qtd_dispositivos"
@@ -57,20 +60,41 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="0"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textColorLink="@android:color/holo_blue_dark"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/barraProgresso"
+        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/layoutRedeWifi"
+        android:layout_alignParentStart="true"
+        android:max="10000" />
+
+    <ListView
+        android:id="@+id/listaDeIPsConectadosID"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="457dp"
+        android:layout_below="@+id/layoutRedeWifi"
+        android:divider="@drawable/divider"
+        android:dividerHeight="2px"></ListView>
 
-        <ListView
-            android:id="@+id/listaDeIPsConectadosID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
 
-</LinearLayout>
+        android:layout_alignParentStart="true"
+        android:background="@color/colorNavBackground"
+        app:itemIconTint="@color/nav_bottom_color"
+        app:itemTextColor="@color/nav_bottom_color"
+        app:menu="@menu/menu_bottom"></android.support.design.widget.BottomNavigationView>
+
+</RelativeLayout>
