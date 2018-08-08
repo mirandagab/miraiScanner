@@ -48,15 +48,11 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private String ips = "";
 
-    private ArrayAdapter<String> adapterList;
-
     private AdapterDispositivo adapterDispositivo;
 
     private List<String> listaIpsString;
 
     private List<Dispositivo> listaDispositivos;
-
-//    private ProgressDialog carregamento;
 
     private Activity activity;
 
@@ -70,12 +66,10 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
 
     private double total, totalAux = 0;
 
-    public ScannerWiFi(Context contexto, ArrayAdapter adapterList,
-                       AdapterDispositivo adapterDispositivo, Activity activity,
+    public ScannerWiFi(Context contexto, AdapterDispositivo adapterDispositivo, Activity activity,
                        ProgressBar progressBar, TextView textoProgresso){
         this.contexto = contexto;
         this.mContextRef = new WeakReference<Context>(contexto);
-        this.adapterList = adapterList;
         this.adapterDispositivo = adapterDispositivo;
         this.activity = activity;
         this.textoProgresso = textoProgresso;
@@ -92,8 +86,6 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
         textoProgresso.setVisibility(TextView.VISIBLE);
         textoProgresso.setText("0%");
         super.onPreExecute();
-//        carregamento = ProgressDialog.show(contexto, "Por favor aguarde",
-//                "Escaneando a rede WiFi");
     }
 
     @Override
@@ -228,10 +220,6 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
         super.onPostExecute(textoExibicao);
 
         if(textoExibicao != "" && textoExibicao != null) {
-            adapterList.clear();
-            adapterList.addAll(listaIpsString);
-            //adapterList.notifyDataSetChanged();
-
             adapterDispositivo.setDispositivos(listaDispositivos);
             TextView nome_rede = (TextView) activity.findViewById(R.id.rede_wifi);
             if(!this.redeWifi.equals("unknown ssid"))
@@ -240,7 +228,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 nome_rede.setText("Rede desconhecida");
 
             TextView qtdDispositivos = (TextView) activity.findViewById(R.id.qtd_dispositivos);
-            qtdDispositivos.setText(listaIpsString.size() + "");
+            qtdDispositivos.setText(listaDispositivos.size() + "");
 
             Log.i(TAG, "Setando resultados na tela via Async.");
         }
@@ -248,20 +236,20 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
             Log.e(TAG, "Erro ao setar o texto na tela via Async.");
         }
 
-        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        progressBar.setVisibility(ProgressBar.GONE);
         textoProgresso.setText("Rede escaneada");
-        textoProgresso.setVisibility(TextView.INVISIBLE);
+        textoProgresso.setVisibility(TextView.GONE);
 
         //Enviando notificação teste avisando sobre a quantidade de dispositivos
-        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        /*FirebaseMessaging fm = FirebaseMessaging.getInstance();
         AtomicInteger msgID = new AtomicInteger();
         fm.send(new RemoteMessage.Builder("notificacaomirai" + "@gcm.googleapis.com")
                 .setMessageId(Integer.toString(msgID.incrementAndGet()))
                 .addData("my_message", "Hello World")
                 .addData("my_action","SAY_HELLO")
                 .build());
-
+        */
         //Tirando o ProgressDialog da tela
-//        carregamento.dismiss();
+        //carregamento.dismiss();
     }
 }
