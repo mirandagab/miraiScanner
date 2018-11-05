@@ -1,8 +1,10 @@
 package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 import miraiscanner.facom.ufu.br.miraiscanner.Model.Dispositivo;
 
@@ -25,10 +27,22 @@ public class ScannerPortas {
             System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
                     "] está com a porta 23 aberta.");
             return true;
-        } catch(ConnectException c){
+        } catch (ConnectException c) {
             System.out.println("[porta23] Não foi possível conectar. Erro: " + c);
             dispositivo.setPorta23Aberta(false);
             System.out.println("[ConnectException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 23 fechada.");
+            return false;
+        } catch (SocketTimeoutException t) {
+            System.out.println("[porta23] Não foi possível conectar. Erro: " + t);
+            dispositivo.setPorta23Aberta(false);
+            System.out.println("[SocketTimeoutException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 23 fechada.");
+            return false;
+        } catch (IOException i) {
+            System.out.println("[porta23] Não foi possível conectar. Erro: " + i);
+            dispositivo.setPorta23Aberta(false);
+            System.out.println("[IOException] Dispositivo [" + dispositivo.getIp() +
                     "] está com a porta 23 fechada.");
             return false;
         } catch (Exception e) {
@@ -54,6 +68,18 @@ public class ScannerPortas {
             System.out.println("[porta48101] Não foi possível conectar. Erro: " + c);
             dispositivo.setPorta48101Aberta(false);
             System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 48101 fechada.");
+            return false;
+        } catch (SocketTimeoutException t) {
+            System.out.println("[porta48101] Não foi possível conectar. Erro: " + t);
+            dispositivo.setPorta48101Aberta(false);
+            System.out.println("[SocketTimeoutException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 48101 fechada.");
+            return false;
+        } catch (IOException i) {
+            System.out.println("[porta48101] Não foi possível conectar. Erro: " + i);
+            dispositivo.setPorta48101Aberta(false);
+            System.out.println("[IOException] Dispositivo [" + dispositivo.getIp() +
                     "] está com a porta 48101 fechada.");
             return false;
         } catch (Exception e) {
