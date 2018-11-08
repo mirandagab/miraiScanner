@@ -60,9 +60,9 @@ public class ScannerPortas {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(this.dispositivo.getIp(), 48101), 500);
             socket.close();
-            dispositivo.setPorta48101Aberta(false);
+            dispositivo.setPorta48101Aberta(true);
             System.out.println("Dispositivo [" + dispositivo.getIp() +
-                    "] está com a porta 48101 fechada.");
+                    "] está com a porta 48101 aberta.");
             return true;
         } catch(ConnectException c){
             System.out.println("[porta48101] Não foi possível conectar. Erro: " + c);
