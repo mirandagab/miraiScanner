@@ -30,7 +30,8 @@ public class DispositivoActivity extends AppCompatActivity {
         Intent it = this.getIntent();
 
         if(it.getSerializableExtra("dispositivos") != null) {
-            DispositivoResponse dispositivoResponse = (DispositivoResponse) it.getSerializableExtra("dispositivos");
+            DispositivoResponse dispositivoResponse = (DispositivoResponse)
+                    it.getSerializableExtra("dispositivos");
             this.dispositivos = dispositivoResponse;
         }
         if(it.getStringExtra("nome_rede") != null) {
@@ -57,6 +58,7 @@ public class DispositivoActivity extends AppCompatActivity {
 
         //Painel de ameaças
         TextView txt_23 = (TextView) findViewById(R.id.txt_23);
+        TextView txt_2323 = (TextView) findViewById(R.id.txt_2323);
         TextView txt_48101 = (TextView) findViewById(R.id.txt_48101);
 
         boolean vulneravel = false;
@@ -68,6 +70,15 @@ public class DispositivoActivity extends AppCompatActivity {
         }
         else{
             txt_23.setText("Fechada");
+        }
+
+        if(dispositivo.getPorta2323Aberta()){
+            txt_2323.setText("Aberta");
+            txt_2323.setTextColor(Color.parseColor("#ffbb33"));
+            vulneravel = true;
+        }
+        else{
+            txt_2323.setText("Fechada");
         }
 
         if(dispositivo.getPorta48101Aberta()){
@@ -83,13 +94,15 @@ public class DispositivoActivity extends AppCompatActivity {
         ImageView img_ameacas = (ImageView) findViewById(R.id.img_ameacas);
 
         if(vulneravel){
-            txt_ameacas.setText("Foram encontradas vulnerabilidades no dispositivo");
+            txt_ameacas.setText("Foram encontradas vulnerabilidades relacionadas ao Mirai no dispositivo. " +
+                    "Por favor verifique suas senhas e resete o dispositivo.");
             img_ameacas.setImageResource(R.drawable.twotone_warning_24);
         }
         else{
-            txt_ameacas.setText("O dispositivo não possui nenhuma vulnerabilidade");
+            txt_ameacas.setText("O dispositivo não possui nenhuma vulnerabilidade relacionada ao Mirai.");
             img_ameacas.setImageResource(R.drawable.twotone_check_circle_24);
-            ImageViewCompat.setImageTintList(img_ameacas, ColorStateList.valueOf(ContextCompat.getColor(DispositivoActivity.this, R.color.checked)));
+            ImageViewCompat.setImageTintList(img_ameacas, ColorStateList.valueOf(ContextCompat
+                    .getColor(DispositivoActivity.this, R.color.checked)));
         }
 
         //Botão voltar da barra superior

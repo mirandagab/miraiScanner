@@ -183,12 +183,13 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                 }
 
                 //chamar a API de verificar Fabricante por MAC
-                //e também verificar as portas 23 e 48101
+                //e também verificar as portas 23, 2323 e 48101
                 for(Dispositivo dispositivo : listaDispositivos){
                     String fabricante = MacVendorLookup.get(dispositivo.getMac());
                     dispositivo.setFabricante(fabricante);
                     ScannerPortas scannerPortas = new ScannerPortas(dispositivo);
                     scannerPortas.statusPorta23();
+                    scannerPortas.statusPorta2323();
                     scannerPortas.statusPorta48101();
                 }
 

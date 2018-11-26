@@ -55,6 +55,43 @@ public class ScannerPortas {
         }
     }
 
+    public boolean statusPorta2323() {
+        try {
+            Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(this.dispositivo.getIp(), 2323), 500);
+            socket.close();
+            dispositivo.setPorta2323Aberta(true);
+            System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 2323 aberta.");
+            return true;
+        } catch (ConnectException c) {
+            System.out.println("[porta2323] Não foi possível conectar. Erro: " + c);
+            dispositivo.setPorta2323Aberta(false);
+            System.out.println("[ConnectException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 2323 fechada.");
+            return false;
+        } catch (SocketTimeoutException t) {
+            System.out.println("[porta2323] Não foi possível conectar. Erro: " + t);
+            dispositivo.setPorta2323Aberta(false);
+            System.out.println("[SocketTimeoutException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 2323 fechada.");
+            return false;
+        } catch (IOException i) {
+            System.out.println("[porta2323] Não foi possível conectar. Erro: " + i);
+            dispositivo.setPorta2323Aberta(false);
+            System.out.println("[IOException] Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 2323 fechada.");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("[porta2323] Erro: " + e);
+            dispositivo.setPorta2323Aberta(false);
+            System.out.println("[Exception]Dispositivo [" + dispositivo.getIp() +
+                    "] está com a porta 2323 fechada.");
+            return false;
+        }
+    }
+
     public boolean statusPorta48101() {
         try {
             Socket socket = new Socket();

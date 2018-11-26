@@ -15,10 +15,11 @@ public class Dispositivo implements Serializable{
     private String tipo;
     private String fabricante;
 
-    //portas 23 e 48101
+    //portas 23, 2323 e 48101
     //estas variaveis indicam se as portas estão abertas ou fechadas
     private Boolean porta23Aberta;
     private Boolean porta48101Aberta;
+    private Boolean porta2323Aberta;
 
     public Dispositivo(String ip, String mac){
         this.nome = "Genérico";
@@ -27,17 +28,19 @@ public class Dispositivo implements Serializable{
         this.tipo = "Genérico";
         this.fabricante = "Indisponível";
         this.porta23Aberta = false;
+        this.porta2323Aberta = false;
         this.porta48101Aberta = false;
     }
 
     public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante,
-                       Boolean porta23Aberta, Boolean porta48101Aberta){
+                       Boolean porta23Aberta, Boolean porta2323Aberta, Boolean porta48101Aberta){
         this.nome = nome;
         this.ip = ip;
         this.tipo = tipo;
         this.mac = mac.toUpperCase();
         this.fabricante = fabricante;
         this.porta23Aberta = porta23Aberta;
+        this.porta2323Aberta = porta2323Aberta;
         this.porta48101Aberta = porta48101Aberta;
     }
 
@@ -80,6 +83,10 @@ public class Dispositivo implements Serializable{
     public Boolean getPorta23Aberta(){ return this.porta23Aberta; }
 
     public void setPorta23Aberta(Boolean porta23Aberta) { this.porta23Aberta = porta23Aberta; }
+
+    public Boolean getPorta2323Aberta(){ return this.porta2323Aberta; }
+
+    public void setPorta2323Aberta(Boolean porta23Aberta) { this.porta2323Aberta = porta23Aberta; }
 
     public Boolean getPorta48101Aberta(){ return this.porta48101Aberta; }
 

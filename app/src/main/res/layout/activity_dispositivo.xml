@@ -315,6 +315,46 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="@dimen/activity_margin"
+                            android:layout_marginRight="@dimen/activity_margin"
+                            android:layout_marginBottom="@dimen/espacamento_listview"
+                            android:text="@string/porta2323"
+                            android:textColor="#616161"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end">
+
+                        <TextView
+                            android:id="@+id/txt_2323"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="@dimen/activity_margin"
+                            android:layout_marginRight="@dimen/activity_margin"
+                            android:layout_marginBottom="@dimen/espacamento_listview"
+                            android:text="@string/porta2323"
+                            android:textAlignment="textEnd"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
                             android:id="@+id/label_txt_48101"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -337,9 +377,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
-                            android:layout_marginBottom="@dimen/espacamento_listview"
                             android:layout_marginLeft="@dimen/activity_margin"
                             android:layout_marginRight="@dimen/activity_margin"
+                            android:layout_marginBottom="@dimen/espacamento_listview"
                             android:text="@string/porta48101"
                             android:textAlignment="textEnd"
                             android:textSize="16sp" />
