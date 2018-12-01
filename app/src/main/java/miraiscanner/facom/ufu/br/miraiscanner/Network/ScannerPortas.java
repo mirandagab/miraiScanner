@@ -29,7 +29,7 @@ public class ScannerPortas {
             System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
                     "] está com a porta 23 aberta.");
             Telnet telnet = new Telnet();
-            telnet.logar(dispositivo.getIp());
+            telnet.logar(dispositivo.getIp(), 23);
             return true;
         } catch (ConnectException c) {
             System.out.println("[porta23] Não foi possível conectar. Erro: " + c);

@@ -31,68 +31,105 @@ class Telnet {
         this.conectado = false;
     }
 
-    public  void logar(String ip) {
-        try {
-            // Connect to the specified server
-            this.telnet.connect(ip, 23);
+    public  void logar(String ip, int porta) {
+        for (int i = 0; i < 60; i++){
+            try {
+                // Connect to the specified server
+                this.telnet.connect(ip, porta);
 
-            // Get input and output stream references
-            this.in = telnet.getInputStream();
-            this.out = new OutputStreamWriter(telnet.getOutputStream());
+                // Get input and output stream references
+                this.in = telnet.getInputStream();
+                this.out = new OutputStreamWriter(telnet.getOutputStream());
+                // Log the user on
+                System.out.println("[TELNET logando] Usuário: " + this.credenciais.cred[i][0]
+                        + " / senha: " + this.credenciais.cred[i][1]);
+                readUntil("login: ");
+                this.out.write(this.credenciais.cred[i][0] + "\r\n");
+                this.out.flush();
+                readUntil("password: ");
+                this.out.write(this.credenciais.cred[i][1] + "\r\n");
+                this.out.flush();
 
-        }catch (Exception e){
-            System.out.println("[TELNET CONNECT] Algo errado aconteceu: " + e);
-        }
-        try {
-            // Log the user on
-            System.out.println("[TELNET logando] Usuário: " + this.credenciais.cred[0][0]
-                    + " / senha: " + this.credenciais.cred[0][1]);
-            readUntil("login: ");
-            this.out.write(this.credenciais.cred[0][0] + "\r\n");
-            this.out.flush();
-            readUntil("password: ");
-            this.out.write(this.credenciais.cred[0][1] + "\r\n");
-            this.out.flush();
-
-            if (estaConectado(this.prompt + " ")) {
-                System.out.println("[estaCONECTADO] TRUE");
-                try {
-                    this.in.close();
+                if (estaConectado(this.prompt + " ")){
+                    System.out.println("[estaCONECTADO] TRUE");
+                    try {
+                        this.in.close();
 //                    this.out.close();
-                    this.telnet.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }else {
-                System.out.println("[estaCONECTADO] FALSE");
-                for(int i = 1; i < 60 ; i++) {
-                    this.out.write(this.credenciais.cred[i][0] + "\r\n");
-                    this.out.flush();
-                    readUntil("password: ");
-                    this.out.write(this.credenciais.cred[i][1] + "\r\n");
-                    this.out.flush();
-                    if (estaConectado(this.prompt + " ")){
-                        try {
-                            this.in.close();
-                            this.telnet.disconnect();
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        break;
+                        this.telnet.disconnect();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                } else {
+                    try {
+                        this.in.close();
+//                    this.out.close();
+                        this.telnet.disconnect();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-            }
 
-//                 Advance to a prompt
-//                readUntil(this.prompt + " ");
-//                this.out.write("exit\r\n");
-//                this.out.flush();
-//                System.out.println("[TELNET LOGOU] Usuário: " + this.credenciais.cred[i][0] + " / senha: "
-//                        + this.credenciais.cred[i][1]);
-//                break;
-        } catch (Exception e) {
-            System.out.println("[TELNET] Algo errado aconteceu: " + e);
-        }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        } //FIM DO FOR
+//        try {
+//            // Connect to the specified server
+//            this.telnet.connect(ip, 23);
+//
+//            // Get input and output stream references
+//            this.in = telnet.getInputStream();
+//            this.out = new OutputStreamWriter(telnet.getOutputStream());
+//            // Log the user on
+//            System.out.println("[TELNET logando] Usuário: " + this.credenciais.cred[0][0]
+//                    + " / senha: " + this.credenciais.cred[0][1]);
+//            readUntil("login: ");
+//            this.out.write(this.credenciais.cred[0][0] + "\r\n");
+//            this.out.flush();
+//            readUntil("password: ");
+//            this.out.write(this.credenciais.cred[0][1] + "\r\n");
+//            this.out.flush();
+//
+//            if (estaConectado(this.prompt + " ")) {
+//                System.out.println("[estaCONECTADO] TRUE");
+//                try {
+//                    this.in.close();
+////                    this.out.close();
+//                    this.telnet.disconnect();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }else {
+//                System.out.println("[estaCONECTADO] FALSE");
+//                for(int i = 1; i < 60 ; i++) {
+//                    this.out.write(this.credenciais.cred[i][0] + "\r\n");
+//                    this.out.flush();
+//                    readUntil("password: ");
+//                    this.out.write(this.credenciais.cred[i][1] + "\r\n");
+//                    this.out.flush();
+//                    if (estaConectado(this.prompt + " ")){
+//                        try {
+//                            this.in.close();
+//                            this.telnet.disconnect();
+//                        }catch (Exception e){
+//                            e.printStackTrace();
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
+//
+////                 Advance to a prompt
+////                readUntil(this.prompt + " ");
+////                this.out.write("exit\r\n");
+////                this.out.flush();
+////                System.out.println("[TELNET LOGOU] Usuário: " + this.credenciais.cred[i][0] + " / senha: "
+////                        + this.credenciais.cred[i][1]);
+////                break;
+//        } catch (Exception e) {
+//            System.out.println("[TELNET] Algo errado aconteceu: " + e);
+//        }
     }
 //
 //    public void su(String password) {
