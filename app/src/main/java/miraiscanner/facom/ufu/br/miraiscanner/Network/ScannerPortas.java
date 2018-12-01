@@ -1,5 +1,7 @@
 package miraiscanner.facom.ufu.br.miraiscanner.Network;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
@@ -18,7 +20,7 @@ public class ScannerPortas {
         this.dispositivo = dispositivo;
     }
 
-    public boolean statusPorta23() {
+    public boolean statusPorta23(Context context) {
         try {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(this.dispositivo.getIp(), 23), 500);
@@ -26,6 +28,8 @@ public class ScannerPortas {
             dispositivo.setPorta23Aberta(true);
             System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
                     "] está com a porta 23 aberta.");
+            Telnet telnet = new Telnet();
+            telnet.logar(dispositivo.getIp());
             return true;
         } catch (ConnectException c) {
             System.out.println("[porta23] Não foi possível conectar. Erro: " + c);

@@ -188,7 +188,7 @@ public class ScannerWiFi extends AsyncTask<Void, Void, String>{
                     String fabricante = MacVendorLookup.get(dispositivo.getMac());
                     dispositivo.setFabricante(fabricante);
                     ScannerPortas scannerPortas = new ScannerPortas(dispositivo);
-                    scannerPortas.statusPorta23();
+                    scannerPortas.statusPorta23(context);
                     scannerPortas.statusPorta2323();
                     scannerPortas.statusPorta48101();
                 }
