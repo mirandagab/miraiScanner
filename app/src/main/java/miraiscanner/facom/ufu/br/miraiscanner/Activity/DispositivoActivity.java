@@ -10,7 +10,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -61,6 +63,9 @@ public class DispositivoActivity extends AppCompatActivity {
         TextView txt_23 = (TextView) findViewById(R.id.txt_23);
         TextView txt_2323 = (TextView) findViewById(R.id.txt_2323);
         TextView txt_48101 = (TextView) findViewById(R.id.txt_48101);
+        TextView txt_usuario = (TextView) findViewById(R.id.telnet_usuario);
+        TextView txt_senha = (TextView) findViewById(R.id.telnet_senha);
+        LinearLayout layout_telnet = (LinearLayout) findViewById(R.id.layout_telnet);
 
         boolean vulneravel = false;
 
@@ -68,6 +73,9 @@ public class DispositivoActivity extends AppCompatActivity {
             txt_23.setText("Aberta");
             txt_23.setTextColor(Color.parseColor("#ffbb33"));
             vulneravel = true;
+            txt_usuario.setText(dispositivo.getUsuario());
+            txt_senha.setText(dispositivo.getSenha());
+            layout_telnet.setVisibility(View.VISIBLE);
         }
         else{
             txt_23.setText("Fechada");
@@ -77,6 +85,11 @@ public class DispositivoActivity extends AppCompatActivity {
             txt_2323.setText("Aberta");
             txt_2323.setTextColor(Color.parseColor("#ffbb33"));
             vulneravel = true;
+            if(!dispositivo.getPorta23Aberta()){
+                txt_usuario.setText(dispositivo.getUsuario());
+                txt_senha.setText(dispositivo.getSenha());
+                layout_telnet.setVisibility(View.VISIBLE);
+            }
         }
         else{
             txt_2323.setText("Fechada");

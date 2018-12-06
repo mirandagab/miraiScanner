@@ -386,7 +386,104 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_telnet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginBottom="@dimen/espacamento_listview"
+                                android:layout_marginLeft="@dimen/activity_margin"
+                                android:layout_marginRight="@dimen/activity_margin"
+                                android:text="@string/telnet_usr"
+                                android:textColor="#616161"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="end">
+
+                            <TextView
+                                android:id="@+id/telnet_usuario"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginBottom="@dimen/espacamento_listview"
+                                android:layout_marginLeft="@dimen/activity_margin"
+                                android:layout_marginRight="@dimen/activity_margin"
+                                android:text="@string/telnet_usr"
+                                android:textAlignment="textEnd"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginLeft="@dimen/activity_margin"
+                                android:layout_marginRight="@dimen/activity_margin"
+                                android:layout_marginBottom="@dimen/espacamento_listview"
+                                android:text="@string/telnet_senha"
+                                android:textColor="#616161"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="end">
+
+                            <TextView
+                                android:id="@+id/telnet_senha"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginLeft="@dimen/activity_margin"
+                                android:layout_marginRight="@dimen/activity_margin"
+                                android:layout_marginBottom="@dimen/espacamento_listview"
+                                android:text="@string/telnet_senha"
+                                android:textAlignment="textEnd"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="132dp"
+        android:orientation="horizontal"></LinearLayout>
 </RelativeLayout>

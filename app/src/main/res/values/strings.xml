@@ -28,7 +28,9 @@
     <!--Ameaças-->
     <string name="ameacas">Ameaças</string>
     <string name="porta23">Porta 23</string>
-    <string name="porta48101">Porta 48101</string>
     <string name="porta2323">Porta 2323</string>
+    <string name="porta48101">Porta 48101</string>
+    <string name="telnet_usr">Usuário Telnet</string>
+    <string name="telnet_senha">Senha Telnet</string>
 
 </resources>

@@ -21,6 +21,8 @@ class Telnet {
     private String prompt;
     private Credenciais credenciais;
     private boolean conectado;
+    private String usuario;
+    private String senha;
 
     public Telnet(){
         this.telnet = new TelnetClient();
@@ -29,6 +31,8 @@ class Telnet {
         this.prompt = ">";
         this.credenciais = new Credenciais();
         this.conectado = false;
+        this.usuario = "Não descoberto";
+        this.senha = "Não descoberto";
     }
 
     public  void logar(String ip, int porta) {
@@ -52,6 +56,8 @@ class Telnet {
 
                 if (estaConectado(this.prompt + " ")){
                     System.out.println("[estaCONECTADO] TRUE");
+                    this.usuario = this.credenciais.cred[i][0];
+                    this.senha = this.credenciais.cred[i][1];
                     try {
                         this.in.close();
 //                    this.out.close();
@@ -169,6 +175,9 @@ class Telnet {
         return null;
     }
 
+    // este método verifica se houve sucesso na conexão com o servidor telnet
+    // OBS.: as mensagens estão configuradas de acordo com o servidor Telnet do Windows
+    // para outros servidores Telnet, verificar as mensagens padrão de conexão e falha de login
     public boolean estaConectado(String pattern) {
         try {
             char lastChar = pattern.charAt(pattern.length() - 1);
@@ -185,6 +194,8 @@ class Telnet {
 //                        System.out.print("[READUNTIL2] " + sb.toString());
                         return true;
                     } else if (sb.toString().endsWith("login: ")){
+                        return false;
+                    } else if (sb.toString().endsWith("account")){
                         return false;
                     }
                 }
@@ -223,4 +234,20 @@ class Telnet {
 //            e.printStackTrace();
 //        }
 //    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 }

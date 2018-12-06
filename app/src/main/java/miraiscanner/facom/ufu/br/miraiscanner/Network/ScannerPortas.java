@@ -30,6 +30,8 @@ public class ScannerPortas {
                     "] está com a porta 23 aberta.");
             Telnet telnet = new Telnet();
             telnet.logar(dispositivo.getIp(), 23);
+            dispositivo.setUsuario(telnet.getUsuario());
+            dispositivo.setSenha(telnet.getSenha());
             return true;
         } catch (ConnectException c) {
             System.out.println("[porta23] Não foi possível conectar. Erro: " + c);
@@ -67,6 +69,10 @@ public class ScannerPortas {
             dispositivo.setPorta2323Aberta(true);
             System.out.println("[ConnectException]Dispositivo [" + dispositivo.getIp() +
                     "] está com a porta 2323 aberta.");
+            Telnet telnet = new Telnet();
+            telnet.logar(dispositivo.getIp(), 2323);
+            dispositivo.setUsuario(telnet.getUsuario());
+            dispositivo.setSenha(telnet.getSenha());
             return true;
         } catch (ConnectException c) {
             System.out.println("[porta2323] Não foi possível conectar. Erro: " + c);

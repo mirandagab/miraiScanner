@@ -21,6 +21,11 @@ public class Dispositivo implements Serializable{
     private Boolean porta48101Aberta;
     private Boolean porta2323Aberta;
 
+    // estas variáveis indicam as credenciais de acesso caso a porta 23 ou 2323
+    // estejam abertas e caso as credenciais estejam na lista do Mirai
+    private String usuario;
+    private String senha;
+
     public Dispositivo(String ip, String mac){
         this.nome = "Genérico";
         this.ip = ip;
@@ -30,10 +35,13 @@ public class Dispositivo implements Serializable{
         this.porta23Aberta = false;
         this.porta2323Aberta = false;
         this.porta48101Aberta = false;
+        this.usuario = "";
+        this.senha = "";
     }
 
     public Dispositivo(String nome, String ip, String mac, String tipo, String fabricante,
-                       Boolean porta23Aberta, Boolean porta2323Aberta, Boolean porta48101Aberta){
+                       Boolean porta23Aberta, Boolean porta2323Aberta, Boolean porta48101Aberta,
+                       String usuario, String senha){
         this.nome = nome;
         this.ip = ip;
         this.tipo = tipo;
@@ -42,6 +50,9 @@ public class Dispositivo implements Serializable{
         this.porta23Aberta = porta23Aberta;
         this.porta2323Aberta = porta2323Aberta;
         this.porta48101Aberta = porta48101Aberta;
+        this.usuario = usuario;
+        this.senha = senha;
+
     }
 
     public String getNome() {
@@ -91,4 +102,12 @@ public class Dispositivo implements Serializable{
     public Boolean getPorta48101Aberta(){ return this.porta48101Aberta; }
 
     public void setPorta48101Aberta(Boolean porta48101Aberta) { this.porta48101Aberta = porta48101Aberta; }
+
+    public String getUsuario() { return usuario; }
+
+    public void setUsuario(String usuario) { this.usuario = usuario; }
+
+    public String getSenha() { return senha; }
+
+    public void setSenha(String senha) { this.senha = senha; }
 }
