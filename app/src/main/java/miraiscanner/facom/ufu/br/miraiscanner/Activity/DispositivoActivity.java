@@ -108,12 +108,13 @@ public class DispositivoActivity extends AppCompatActivity {
         ImageView img_ameacas = (ImageView) findViewById(R.id.img_ameacas);
 
         if(vulneravel){
-            txt_ameacas.setText("Foram encontradas vulnerabilidades relacionadas ao Mirai no dispositivo. " +
-                    "Por favor verifique suas senhas e resete o dispositivo.");
+            txt_ameacas.setText("Foram encontradas vulnerabilidades em seu dispositivo que podem " +
+                    "ser exploradas pelo Mirai. Altere as senhas de acesso e reinicie o dispositivo.");
             img_ameacas.setImageResource(R.drawable.twotone_warning_24);
         }
         else{
-            txt_ameacas.setText("O dispositivo não possui nenhuma vulnerabilidade relacionada ao Mirai.");
+            txt_ameacas.setText("Não foi encontrada nenhuma vulnerabilidade relacionada ao Mirai " +
+                    "neste dispositivo.");
             img_ameacas.setImageResource(R.drawable.twotone_check_circle_24);
             ImageViewCompat.setImageTintList(img_ameacas, ColorStateList.valueOf(ContextCompat
                     .getColor(DispositivoActivity.this, R.color.checked)));
